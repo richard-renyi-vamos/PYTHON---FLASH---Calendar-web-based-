@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Calendar</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Web Calendar</h1>
+        <div id="calendar"></div>
+    </div>
+
+    <script>
+        function createCalendar(year, month) {
+            let d = new Date(year, month);
+            let table = '<table class="table table-bordered"><thead><tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th></tr></thead><tbody><tr>';
+            
+            for (let i = 0; i < getDay(d); i++) {
+                table += '<td></td>';
+            }
+
+            while (d.getMonth() == month) {
+                table += '<td>' + d.getDate() + '</td>';
+                if (getDay(d) % 7 == 6) {
+                    table += '</tr><tr>';
+                }
+                d.setDate(d.getDate() + 1);
+            }
+
+            if (getDay(d) != 0) {
+                for (let i = getDay(d); i < 7; i++) {
+                    table += '<td></td>';
+                }
+            }
+
+            table += '</tr></tbody></table>';
+
+            document.getElementById('calendar').innerHTML = table;
+        }
+
+        function getDay(date) {
+            let day = date.getDay();
+            if (day == 0) day = 7;
+            return day - 1;
+        }
+
+        createCalendar(new Date().getFullYear(), new Date().getMonth());
+    </script>
+</body>
+</html>
